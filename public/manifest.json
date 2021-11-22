@@ -1,0 +1,31 @@
+{
+    "name" : "Prueba de PWA",
+    "short_name": "PWA",
+    "start_url": "/",
+    "description" : "Aplicación de prueba de PWA",
+    "lang": "en_USA",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#ccc",
+    "background_color": "f2f2f2",
+    "icons": [
+        {
+            "src":"images/icons/32.png",
+            "sizes":"16x16",
+            "type": "image/png"
+        },
+        {
+            "src":"images/icons/48.png",
+            "sizes":"32x32",
+            "type": "image/png"
+        },
+        {
+            "src":"images/icons/64.png",
+            "sizes":"64x64",
+            "type": "image/png"
+        }
+
+
+
+    ]
+}
