@@ -4,9 +4,9 @@ self.addEventListener('push', function(event) {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
   
-    const title = 'Push Codelab';
+    const title = 'NEWS!';
     const options = {
-      body: 'Yay it works.',
+      body: 'Visita nuestras noticias.',
       icon: 'images/icon.png',
       badge: 'images/badge.png'
     };
@@ -15,6 +15,71 @@ self.addEventListener('push', function(event) {
     const notificationPromise = self.registration.showNotification(title, options);
     event.waitUntil(notificationPromise);
   });
+
+  self.addEventListener('notificationclick', function(event) {
+    console.log('On notification click: ', event.notification.data);
+    var url = './blog.html';
+    event.notification.close();
+  
+    event.waitUntil(
+        clients.openWindow(url)
+    );
+  });
+  
+
+
+
+const cache = 'cache-site-v1';
+const assets = [
+    "/",
+    "/index.html",
+    '/blog.html',
+    '/assets/css/bootstrap.css',
+    '/assets/css/maicons.css',
+    '/assets/css/theme.css',
+    "/assets/css/theme.css.map",
+
+
+
+];
+
+self.addEventListener('install', installEvent => {
+    installEvent.waitUntil(
+        caches.open(cache)
+        .then( cacheResh => { 
+            return cacheResh.addAll(assets);
+    })
+    )
+});
+
+self.addEventListener('fetch', fetchEvent => {
+    //console.log(fetchEvent.request.url);
+    fetchEvent.respondWith(
+        caches.open(cache).then(cache => {
+            return cache.match(fetchEvent.request).then(response => {
+                return response || fetch(fetchEvent.request).then( response => {
+                    cache.put(fetchEvent.request, response.clone());
+                });
+            });
+        })
+    )
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Cache
 
@@ -55,27 +120,4 @@ const assets = [
     "/js/templatemo_custom.js",
 
     
-];
-
-self.addEventListener('install', installEvent => {
-    installEvent.waitUntil(
-        caches.open(cachePWA)
-        .then( cacheResh => { 
-            return cacheResh.addAll(assets);
-    })
-    )
-});
-
-self.addEventListener('fetch', fetchEvent => {
-    //console.log(fetchEvent.request.url);
-    fetchEvent.respondWith(
-        caches.open(cachePWA).then(cache => {
-            return cache.match(fetchEvent.request).then(response => {
-                return response || fetch(fetchEvent.request).then( response => {
-                    cache.put(fetchEvent.request, response.clone());
-                });
-            });
-        })
-    )
-})
-*/
+];*/

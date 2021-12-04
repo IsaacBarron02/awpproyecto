@@ -81,7 +81,7 @@ function updateBtn() {
   pushButton.disabled = false;
 }
 
-navigator.serviceWorker.register('sw.js')
+navigator.serviceWorker.register('../sw.js')
 .then(function(swReg) {
   console.log('Service Worker is registered', swReg);
 
